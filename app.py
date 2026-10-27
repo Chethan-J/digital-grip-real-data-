@@ -1,4 +1,4 @@
-
+```python
 import streamlit as st
 import pandas as pd
 import joblib
@@ -21,17 +21,23 @@ reverse_mapping = {
     4: "Very High"
 }
 
-levels = [
-    "Very Low",
-    "Low",
-    "Moderate",
-    "High",
-    "Very High"
-]
+# Suggestions for each dependence level
+suggestions = {
+    "Very Low": "Your smartphone habits appear well controlled. Continue maintaining healthy screen-time habits and regular phone-free periods.",
+
+    "Low": "Your smartphone dependence is relatively low. Try keeping unnecessary notifications off and maintain regular phone-free periods during study, work, and sleep.",
+
+    "Moderate": "Try setting specific phone-free periods during study or work. Reduce unnecessary phone checking and avoid using your smartphone immediately before sleep.",
+
+    "High": "Consider setting daily screen-time limits, reducing unnecessary notifications, and creating dedicated phone-free periods during study, work, and sleep.",
+
+    "Very High": "Your smartphone usage may be strongly affecting your daily habits. Consider strict screen-time limits, reducing notifications, creating phone-free periods, and gradually reducing unnecessary phone checking."
+}
 
 # Custom theme
 st.markdown("""
 <style>
+
 .stApp {
     background: linear-gradient(135deg, #0b1020, #111936, #17133a);
     color: white;
@@ -79,6 +85,46 @@ st.markdown("""
     font-weight: 700;
     margin-bottom: 20px;
 }
+
+.result-card {
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 20px;
+    padding: 30px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.result-level {
+    font-size: 38px;
+    font-weight: 800;
+    margin: 10px 0;
+}
+
+.confidence {
+    font-size: 20px;
+    color: #b8bfd6;
+    margin-top: 10px;
+}
+
+.suggestion-card {
+    background: rgba(255,255,255,0.05);
+    border-left: 5px solid #7c83ff;
+    border-radius: 14px;
+    padding: 22px;
+    margin-top: 20px;
+}
+
+.suggestion-card h3 {
+    margin-top: 0;
+    color: white;
+}
+
+.suggestion-card p {
+    color: #c5c9dc;
+    line-height: 1.7;
+}
+
 </style>
 """, unsafe_allow_html=True)
 
@@ -226,37 +272,77 @@ elif page == "Predict Risk":
             "Urge_To_Check": urge_to_check
         }])
 
+        # Prediction
         prediction = model.predict(user_data)[0]
         probabilities = model.predict_proba(user_data)[0]
 
         predicted_level = reverse_mapping[prediction]
 
+        # Model confidence
+        confidence = max(probabilities) * 100
+
         st.markdown("---")
+
+        # Result
         st.markdown("### 🎯 Your Result")
 
+        st.markdown(f"""
+        <div class="result-card">
+
+            <div style="font-size:20px; color:#b8bfd6;">
+                Your smartphone dependence level is
+            </div>
+
+            <div class="result-level">
+                {predicted_level}
+            </div>
+
+            <div class="confidence">
+                📊 Model Confidence: <strong>{confidence:.1f}%</strong>
+            </div>
+
+        </div>
+        """, unsafe_allow_html=True)
+
+        # Level-specific message
         if predicted_level == "Very Low":
-            st.success("Your smartphone dependence level is Very Low.")
+            st.success(
+                "🌱 Your smartphone usage appears to be well controlled."
+            )
+
         elif predicted_level == "Low":
-            st.success("Your smartphone dependence level is Low.")
+            st.success(
+                "👍 Your smartphone dependence is relatively low."
+            )
+
         elif predicted_level == "Moderate":
-            st.warning("Your smartphone dependence level is Moderate.")
+            st.warning(
+                "⚠️ Your smartphone usage shows a moderate level of dependence."
+            )
+
         elif predicted_level == "High":
-            st.warning("Your smartphone dependence level is High.")
+            st.warning(
+                "⚠️ Your smartphone usage shows a high level of dependence."
+            )
+
         else:
-            st.error("Your smartphone dependence level is Very High.")
+            st.error(
+                "🚨 Your smartphone usage shows a very high level of dependence."
+            )
 
-        st.markdown("### 📊 Prediction Probability")
+        # Suggestion
+        st.markdown(f"""
+        <div class="suggestion-card">
 
-        probability_df = pd.DataFrame({
-            "Dependence Level": levels,
-            "Probability (%)": (probabilities * 100).round(2)
-        })
+            <h3>💡 Suggestion for You</h3>
 
-        st.dataframe(
-            probability_df,
-            use_container_width=True,
-            hide_index=True
-        )
+            <p>
+            {suggestions[predicted_level]}
+            </p>
+
+        </div>
+        """, unsafe_allow_html=True)
+
 
 # Analytics
 elif page == "Analytics":
@@ -273,10 +359,13 @@ elif page == "Analytics":
         The Random Forest model was evaluated using 5-fold stratified
         cross-validation on the real response dataset.
         </p>
+
         <h2>55.00% ± 2.85%</h2>
+
         <p>Mean cross-validation accuracy</p>
     </div>
     """, unsafe_allow_html=True)
+
 
 # Model Information
 elif page == "Model Information":
@@ -313,6 +402,7 @@ elif page == "Model Information":
     </div>
     """, unsafe_allow_html=True)
 
+
 # About
 elif page == "About":
 
@@ -324,6 +414,7 @@ elif page == "About":
     st.markdown("""
     <div class="card">
         <h3>About the Project</h3>
+
         <p>
         Digital Grip is a machine-learning project designed to understand
         smartphone usage behavior and estimate smartphone dependence.
@@ -336,3 +427,4 @@ elif page == "About":
         </p>
     </div>
     """, unsafe_allow_html=True)
+```
