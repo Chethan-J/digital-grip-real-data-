@@ -98,6 +98,7 @@ st.markdown("""
     font-size: 38px;
     font-weight: 800;
     margin: 10px 0;
+    color: white;
 }
 
 .confidence {
@@ -278,17 +279,17 @@ elif page == "Predict Risk":
 
         predicted_level = reverse_mapping[prediction]
 
-        # Confidence
+        # Model confidence
         confidence = max(probabilities) * 100
 
         st.markdown("---")
 
-        # Result
+        # Result heading
         st.markdown("### 🎯 Your Result")
 
-        st.markdown(f"""
+        # Result card
+        st.html(f"""
         <div class="result-card">
-
             <div style="font-size:20px; color:#b8bfd6;">
                 Your smartphone dependence level is
             </div>
@@ -298,11 +299,11 @@ elif page == "Predict Risk":
             </div>
 
             <div class="confidence">
-                📊 Model Confidence: <strong>{confidence:.1f}%</strong>
+                📊 Model Confidence:
+                <strong>{confidence:.1f}%</strong>
             </div>
-
         </div>
-        """, unsafe_allow_html=True)
+        """)
 
         # Level-specific message
         if predicted_level == "Very Low":
@@ -336,17 +337,15 @@ elif page == "Predict Risk":
             )
 
         # Suggestion
-        st.markdown(f"""
+        st.html(f"""
         <div class="suggestion-card">
-
             <h3>💡 Suggestion for You</h3>
 
             <p>
-            {suggestions[predicted_level]}
+                {suggestions[predicted_level]}
             </p>
-
         </div>
-        """, unsafe_allow_html=True)
+        """)
 
 
 # Analytics
@@ -359,7 +358,6 @@ elif page == "Analytics":
 
     st.markdown("""
     <div class="card">
-
         <h3>Model Validation</h3>
 
         <p>
@@ -372,7 +370,6 @@ elif page == "Analytics":
         <p>
         Mean cross-validation accuracy
         </p>
-
     </div>
     """, unsafe_allow_html=True)
 
@@ -387,18 +384,15 @@ elif page == "Model Information":
 
     st.markdown("""
     <div class="card">
-
         <h3>Random Forest Classifier</h3>
 
         <p>
         Digital Grip uses a Random Forest classification model to estimate
         smartphone dependence from behavioral responses.
         </p>
-
     </div>
 
     <div class="card">
-
         <h3>Features Used</h3>
 
         <p>
@@ -407,17 +401,14 @@ elif page == "Model Information":
         without the phone, interference with responsibilities,
         productivity impact, and urge to check.
         </p>
-
     </div>
 
     <div class="card">
-
         <h3>Dependence Levels</h3>
 
         <p>
         Very Low → Low → Moderate → High → Very High
         </p>
-
     </div>
     """, unsafe_allow_html=True)
 
@@ -432,7 +423,6 @@ elif page == "About":
 
     st.markdown("""
     <div class="card">
-
         <h3>About the Project</h3>
 
         <p>
@@ -445,6 +435,5 @@ elif page == "About":
         phone checking, productivity impact, sleep impact, and the urge
         to check the smartphone.
         </p>
-
     </div>
     """, unsafe_allow_html=True)
