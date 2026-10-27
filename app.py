@@ -192,6 +192,7 @@ if page == "Home":
         </div>
         """, unsafe_allow_html=True)
 
+
 # Predict Risk
 elif page == "Predict Risk":
 
@@ -277,7 +278,7 @@ elif page == "Predict Risk":
 
         predicted_level = reverse_mapping[prediction]
 
-        # Model confidence
+        # Confidence
         confidence = max(probabilities) * 100
 
         st.markdown("---")
@@ -305,26 +306,31 @@ elif page == "Predict Risk":
 
         # Level-specific message
         if predicted_level == "Very Low":
+
             st.success(
                 "🌱 Your smartphone usage appears to be well controlled."
             )
 
         elif predicted_level == "Low":
+
             st.success(
                 "👍 Your smartphone dependence is relatively low."
             )
 
         elif predicted_level == "Moderate":
+
             st.warning(
                 "⚠️ Your smartphone usage shows a moderate level of dependence."
             )
 
         elif predicted_level == "High":
+
             st.warning(
                 "⚠️ Your smartphone usage shows a high level of dependence."
             )
 
         else:
+
             st.error(
                 "🚨 Your smartphone usage shows a very high level of dependence."
             )
@@ -353,7 +359,9 @@ elif page == "Analytics":
 
     st.markdown("""
     <div class="card">
+
         <h3>Model Validation</h3>
+
         <p>
         The Random Forest model was evaluated using 5-fold stratified
         cross-validation on the real response dataset.
@@ -361,7 +369,10 @@ elif page == "Analytics":
 
         <h2>55.00% ± 2.85%</h2>
 
-        <p>Mean cross-validation accuracy</p>
+        <p>
+        Mean cross-validation accuracy
+        </p>
+
     </div>
     """, unsafe_allow_html=True)
 
@@ -376,28 +387,37 @@ elif page == "Model Information":
 
     st.markdown("""
     <div class="card">
+
         <h3>Random Forest Classifier</h3>
+
         <p>
         Digital Grip uses a Random Forest classification model to estimate
         smartphone dependence from behavioral responses.
         </p>
+
     </div>
 
     <div class="card">
+
         <h3>Features Used</h3>
+
         <p>
         Phone checking, distraction, night checking, sleep impact,
         morning phone checking, difficulty reducing usage, discomfort
         without the phone, interference with responsibilities,
         productivity impact, and urge to check.
         </p>
+
     </div>
 
     <div class="card">
+
         <h3>Dependence Levels</h3>
+
         <p>
         Very Low → Low → Moderate → High → Very High
         </p>
+
     </div>
     """, unsafe_allow_html=True)
 
@@ -412,6 +432,7 @@ elif page == "About":
 
     st.markdown("""
     <div class="card">
+
         <h3>About the Project</h3>
 
         <p>
@@ -424,6 +445,6 @@ elif page == "About":
         phone checking, productivity impact, sleep impact, and the urge
         to check the smartphone.
         </p>
+
     </div>
     """, unsafe_allow_html=True)
-```
