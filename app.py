@@ -156,7 +156,7 @@ if page == "Home":
         unsafe_allow_html=True
     )
 
-    st.markdown("""
+    st.html("""
     <div class="card">
         <h3>📱 What is Digital Grip?</h3>
         <p>
@@ -165,33 +165,33 @@ if page == "Home":
         dependence level.
         </p>
     </div>
-    """, unsafe_allow_html=True)
+    """)
 
     col1, col2, col3 = st.columns(3)
 
     with col1:
-        st.markdown("""
+        st.html("""
         <div class="card">
             <h3>🧠 Analyze</h3>
             <p>Analyze important smartphone-related behavioral patterns.</p>
         </div>
-        """, unsafe_allow_html=True)
+        """)
 
     with col2:
-        st.markdown("""
+        st.html("""
         <div class="card">
             <h3>📊 Predict</h3>
             <p>Use machine learning to estimate your dependence level.</p>
         </div>
-        """, unsafe_allow_html=True)
+        """)
 
     with col3:
-        st.markdown("""
+        st.html("""
         <div class="card">
             <h3>💡 Improve</h3>
             <p>Understand your habits and make healthier digital choices.</p>
         </div>
-        """, unsafe_allow_html=True)
+        """)
 
 
 # Predict Risk
@@ -273,21 +273,17 @@ elif page == "Predict Risk":
             "Urge_To_Check": urge_to_check
         }])
 
-        # Prediction
         prediction = model.predict(user_data)[0]
         probabilities = model.predict_proba(user_data)[0]
 
         predicted_level = reverse_mapping[prediction]
 
-        # Model confidence
         confidence = max(probabilities) * 100
 
         st.markdown("---")
 
-        # Result heading
         st.markdown("### 🎯 Your Result")
 
-        # Result card
         st.html(f"""
         <div class="result-card">
             <div style="font-size:20px; color:#b8bfd6;">
@@ -305,7 +301,6 @@ elif page == "Predict Risk":
         </div>
         """)
 
-        # Level-specific message
         if predicted_level == "Very Low":
 
             st.success(
@@ -336,7 +331,6 @@ elif page == "Predict Risk":
                 "🚨 Your smartphone usage shows a very high level of dependence."
             )
 
-        # Suggestion
         st.html(f"""
         <div class="suggestion-card">
             <h3>💡 Suggestion for You</h3>
@@ -356,7 +350,7 @@ elif page == "Analytics":
         unsafe_allow_html=True
     )
 
-    st.markdown("""
+    st.html("""
     <div class="card">
         <h3>Model Validation</h3>
 
@@ -371,7 +365,7 @@ elif page == "Analytics":
         Mean cross-validation accuracy
         </p>
     </div>
-    """, unsafe_allow_html=True)
+    """)
 
 
 # Model Information
@@ -382,7 +376,7 @@ elif page == "Model Information":
         unsafe_allow_html=True
     )
 
-    st.markdown("""
+    st.html("""
     <div class="card">
         <h3>Random Forest Classifier</h3>
 
@@ -410,7 +404,7 @@ elif page == "Model Information":
         Very Low → Low → Moderate → High → Very High
         </p>
     </div>
-    """, unsafe_allow_html=True)
+    """)
 
 
 # About
@@ -421,7 +415,7 @@ elif page == "About":
         unsafe_allow_html=True
     )
 
-    st.markdown("""
+    st.html("""
     <div class="card">
         <h3>About the Project</h3>
 
@@ -436,4 +430,4 @@ elif page == "About":
         to check the smartphone.
         </p>
     </div>
-    """, unsafe_allow_html=True)
+    """)
