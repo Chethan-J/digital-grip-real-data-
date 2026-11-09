@@ -126,9 +126,30 @@ st.markdown("""
     line-height: 1.7;
 }
 
+/* Analytics Metric Visibility Fix */
+[data-testid="stMetricLabel"] {
+    color: #cbd5e1 !important;
+}
+
+[data-testid="stMetricLabel"] p {
+    color: #cbd5e1 !important;
+}
+
+[data-testid="stMetricValue"] {
+    color: #ffffff !important;
+    font-weight: 700 !important;
+}
+
+[data-testid="stMetricValue"] div {
+    color: #ffffff !important;
+}
+
+[data-testid="stMetricDelta"] {
+    color: #cbd5e1 !important;
+}
+
 </style>
 """, unsafe_allow_html=True)
-
 
 # Sidebar
 st.sidebar.markdown("## 📱 Digital Grip")
@@ -144,7 +165,6 @@ page = st.sidebar.radio(
         "About"
     ]
 )
-
 
 # Home
 if page == "Home":
