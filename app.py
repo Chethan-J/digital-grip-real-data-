@@ -34,7 +34,7 @@ suggestions = {
 }
 
 # Custom theme
-st.markdown("""
+st.markdown("")
 <style>
 
 .stApp {
