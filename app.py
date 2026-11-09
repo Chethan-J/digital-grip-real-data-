@@ -1,134 +1,95 @@
+import streamlit as st
+import pandas as pd
+import joblib
 
-        elif predicted_level == "High":
+st.set_page_config(
+    page_title="Digital Grip",
+    page_icon="📱",
+    layout="wide",
+    initial_sidebar_state="expanded"
+)
 
-            st.warning(
-                "⚠️ Your smartphone usage shows a high level of dependence."
-            )
+# Load model
+model = joblib.load("digital_grip_real_model.pkl")
 
-        else:
+reverse_mapping = {
+    0: "Very Low",
+    1: "Low",
+    2: "Moderate",
+    3: "High",
+    4: "Very High"
+}
 
-            st.error(
-                "🚨 Your smartphone usage shows a very high level of dependence."
-            )
+# Suggestions for each dependence level
+suggestions = {
+    "Very Low": "Your smartphone habits appear well controlled. Continue maintaining healthy screen-time habits and regular phone-free periods.",
 
-        st.html(f"""
-        <div class="suggestion-card">
-            <h3>💡 Suggestion for You</h3>
+    "Low": "Your smartphone dependence is relatively low. Try keeping unnecessary notifications off and maintain regular phone-free periods during study, work, and sleep.",
 
-            <p>
-                {suggestions[predicted_level]}
-            </p>
-        </div>
-        """)
+    "Moderate": "Try setting specific phone-free periods during study or work. Reduce unnecessary phone checking and avoid using your smartphone immediately before sleep.",
 
+    "High": "Consider setting daily screen-time limits, reducing unnecessary notifications, and creating dedicated phone-free periods during study, work, and sleep.",
 
-# Analytics
-elif page == "Analytics":
+    "Very High": "Your smartphone usage may be strongly affecting your daily habits. Consider strict screen-time limits, reducing notifications, creating phone-free periods, and gradually reducing unnecessary phone checking."
+}
 
-    st.markdown(
-        '<div class="section-title">📊 Analytics</div>',
-        unsafe_allow_html=True
-    )
+# Custom theme
+st.markdown("""
+<style>
 
-    st.html("""
-    <div class="card">
-        <h3>Model Validation</h3>
+.stApp {
+    background: linear-gradient(135deg, #0b1020, #111936, #17133a);
+    color: white;
+}
 
-        <p>
-        The Random Forest model was evaluated using 5-fold stratified
-        cross-validation on the real response dataset.
-        </p>
+[data-testid="stSidebar"] {
+    background: #0b1020;
+}
 
-        <h2>55.00% ± 2.85%</h2>
+[data-testid="stSidebar"] * {
+    color: white;
+}
 
-        <p>
-        Mean cross-validation accuracy
-        </p>
-    </div>
-    """)
+.main-title {
+    font-size: 52px;
+    font-weight: 800;
+    margin-bottom: 10px;
+}
 
-    st.markdown("### Test Dataset Performance")
-    st.write(
-        "The following metrics show the model's performance on the "
-        "held-out test dataset. Precision, recall, and F1-score are "
-        "weighted averages."
-    )
+.subtitle {
+    font-size: 20px;
+    color: #b8bfd6;
+    margin-bottom: 30px;
+}
 
-    col1, col2, col3, col4 = st.columns(4)
+.card {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.10);
+    border-radius: 18px;
+    padding: 25px;
+    margin-bottom: 20px;
+}
 
-    with col1:
-        st.metric("Accuracy", "55.71%")
+.card h3 {
+    color: white;
+}
 
-    with col2:
-        st.metric("Precision", "49%")
+.card p {
+    color: #b8bfd6;
+    line-height: 1.6;
+}
 
-    with col3:
-        st.metric("Recall", "56%")
+.section-title {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
 
-    with col4:
-        st.metric("F1-Score", "51%")
-
-
-# Model Information
-elif page == "Model Information":
-
-    st.markdown(
-        '<div class="section-title">🤖 Model Information</div>',
-        unsafe_allow_html=True
-    )
-
-    st.html("""
-    <div class="card">
-        <h3>Random Forest Classifier</h3>
-
-        <p>
-        Digital Grip uses a Random Forest classification model to estimate
-        smartphone dependence from behavioral responses.
-        </p>
-    </div>
-
-    <div class="card">
-        <h3>Features Used</h3>
-
-        <p>
-        Phone checking, distraction, night checking, sleep impact,
-        morning phone checking, difficulty reducing usage, discomfort
-        without the phone, interference with responsibilities,
-        productivity impact, and urge to check.
-        </p>
-    </div>
-
-    <div class="card">
-        <h3>Dependence Levels</h3>
-
-        <p>
-        Very Low → Low → Moderate → High → Very High
-        </p>
-    </div>
-    """)
-
-
-# About
-elif page == "About":
-
-    st.markdown(
-        '<div class="section-title">ℹ️ About Digital Grip</div>',
-        unsafe_allow_html=True
-    )
-
-    st.html("""
-    <div class="card">
-        <h3>About the Project</h3>
-
-        <p>
-        Digital Grip is a machine-learning project designed to understand
-        smartphone usage behavior and estimate smartphone dependence.
-        </p>
-
-        <p>
-        The system focuses on behavioral indicators such as distraction,
-        phone checking, productivity impact, sleep impact, and the urge
-        to check the smartphone.
-        </p>
-    </div>
-    """)
+.result-card {
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 20px;
+    padding: 30px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
